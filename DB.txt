@@ -1,0 +1,110 @@
+create table DEPT(DEPT_ID varchar(6) primary key,DEPTNAME varchar(25),DEPMANAGER varchar(30));
+ insert into DEPT(DEPT_ID,DEPTNAME,DEPMANAGER)values('D02','COMMUNICATIONS','ADAM JUSTIN');
+sqlite>  insert into DEPT(DEPT_ID,DEPTNAME,DEPMANAGER)values('D03','PRODUCT','BRUCE WILLS');
+sqlite>  insert into DEPT(DEPT_ID,DEPTNAME,DEPMANAGER)values('D04','INSURANCE','ROBERT SWIFT');
+sqlite>  insert into DEPT(DEPT_ID,DEPTNAME,DEPMANAGER)values('D05','FINANCE','NATASHA STEVENS');
+sqlite> select * from dept;
+D01|HEALTH|TIM ARCHER
+D02|COMMUNICATIONS|ADAM JUSTIN
+D03|PRODUCT|BRUCE WILLS
+D04|INSURANCE|ROBERT SWIFT
+D05|FINANCE|NATASHA STEVENS
+
+
+ create table EMPLOYEE(E_ID varchar(10)primary key ,NAME varchar(15),DEP_ID varchar(10) references DEPT(DEPT_ID),SALARY INTEGER,MANAGER_ID text);
+insert into EMPLOYEE(E_ID,NAME,DEP_ID,SALARY,MANAGER_ID)VALUES('A114','MARTIN TREDEAU','D01',54497,'A120');
+sqlite> insert into EMPLOYEE(E_ID,NAME,DEP_ID,SALARY,MANAGER_ID)VALUES('A116','ROBIN WAYNE','D02',20196,'A187');
+sqlite> insert into EMPLOYEE(E_ID,NAME,DEP_ID,SALARY,MANAGER_ID)VALUES('A178','BRUCE WILLS','D03',66861,'A298');
+sqlite> insert into EMPLOYEE(E_ID,NAME,DEP_ID,SALARY,MANAGER_ID)VALUES('A132','PAUL VINCENT','D01',94791,'A120');
+sqlite> insert into EMPLOYEE(E_ID,NAME,DEP_ID,SALARY,MANAGER_ID)VALUES('A198','TOM HANKS','D02',16879,'A187');
+sqlite> insert into EMPLOYEE(E_ID,NAME,DEP_ID,SALARY,MANAGER_ID)VALUES('A120','TIM ARCHER','D01',48834,'A298');
+sqlite> insert into EMPLOYEE(E_ID,NAME,DEP_ID,SALARY,MANAGER_ID)VALUES('A143','BRAD MICHAEL','D01',24488,'A120');
+sqlite> insert into EMPLOYEE(E_ID,NAME,DEP_ID,SALARY,MANAGER_ID)VALUES('A187','ADAM JUSTIN','D02',80543,'A298');
+sqlite> insert into EMPLOYEE(E_ID,NAME,DEP_ID,SALARY,MANAGER_ID)VALUES('A121','STUART WILLIAM','D02',78629,'A187');
+sqlite> insert into EMPLOYEE(E_ID,NAME,DEP_ID,SALARY,MANAGER_ID)VALUES('A176','EDWARD CANE','D01',89176,'A120');
+sqlite> insert into EMPLOYEE(E_ID,NAME,DEP_ID,SALARY,MANAGER_ID)VALUES('A142','TARA CUMMINGS','D04',99475,'A187');
+sqlite> insert into EMPLOYEE(E_ID,NAME,DEP_ID,SALARY,MANAGER_ID)VALUES('A130','VANESSA PARY','D04',28565,'A187');
+sqlite> insert into EMPLOYEE(E_ID,NAME,DEP_ID,SALARY,MANAGER_ID)VALUES('A128','ADAM WAYNE','D05',94324,'A165');
+sqlite> insert into EMPLOYEE(E_ID,NAME,DEP_ID,SALARY,MANAGER_ID)VALUES('A129','JOSEPH ANGELIN','D05',44280,'A165');
+sqlite> insert into EMPLOYEE(E_ID,NAME,DEP_ID,SALARY,MANAGER_ID)VALUES('A165','NATASHA STEVENS','D05',31377,'A298');
+sqlite> insert into EMPLOYEE(E_ID,NAME,DEP_ID,SALARY,MANAGER_ID)VALUES('A111','JOHN HELLEN','D01',15380,'A120');
+sqlite> insert into EMPLOYEE(E_ID,NAME,DEP_ID,SALARY,MANAGER_ID)VALUES('A194','HAROLLD STEVENS','D02',32166,'A187');
+sqlite> insert into EMPLOYEE(E_ID,NAME,DEP_ID,SALARY,MANAGER_ID)VALUES('A133','STEVE MICHELOS','D02',61215,'A187');
+sqlite> insert into EMPLOYEE(E_ID,NAME,DEP_ID,SALARY,MANAGER_ID)VALUES('A156','NICK MARTIN','D03',50174,'A178');
+sqlite> SELECT * FROM EMPLOYEE;
+A114|MARTIN TREDEAU|D01|54497|A120
+A116|ROBIN WAYNE|D02|20196|A187
+A178|BRUCE WILLS|D03|66861|A298
+A132|PAUL VINCENT|D01|94791|A120
+A198|TOM HANKS|D02|16879|A187
+A120|TIM ARCHER|D01|48834|A298
+A143|BRAD MICHAEL|D01|24488|A120
+A187|ADAM JUSTIN|D02|80543|A298
+A121|STUART WILLIAM|D02|78629|A187
+A176|EDWARD CANE|D01|89176|A120
+A142|TARA CUMMINGS|D04|99475|A187
+A130|VANESSA PARY|D04|28565|A187
+A128|ADAM WAYNE|D05|94324|A165
+A129|JOSEPH ANGELIN|D05|44280|A165
+A165|NATASHA STEVENS|D05|31377|A298
+A111|JOHN HELLEN|D01|15380|A120
+A194|HAROLLD STEVENS|D02|32166|A187
+A133|STEVE MICHELOS|D02|61215|A187
+A156|NICK MARTIN|D03|50174|A178
+
+Answers:
+1. select * from employee where salary >=(select max(salary) from employee where salary<(select max(salary) from employee where salary<(select max(salary) from employee))) order by salary desc;
+A142|TARA CUMMINGS|D04|99475|A187
+A132|PAUL VINCENT|D01|94791|A120
+A128|ADAM WAYNE|D05|94324|A165
+sqlite> select * from employee order by salary desc limit 3;
+A142|TARA CUMMINGS|D04|99475|A187
+A132|PAUL VINCENT|D01|94791|A120
+A128|ADAM WAYNE|D05|94324|A165
+
+
+2.sqlite> select * from employee where salary=(select min(salary) from employee);
+A111|JOHN HELLEN|D01|15380|A120
+
+
+3.
+
+4.select * from employee e  inner join dept d on e.name=d.depmanager;
+A178|BRUCE WILLS|D03|66861|A298|D03|PRODUCT|BRUCE WILLS
+A120|TIM ARCHER|D01|48834|A298|D01|HEALTH|TIM ARCHER
+A187|ADAM JUSTIN|D02|80543|A298|D02|COMMUNICATIONS|ADAM JUSTIN
+A165|NATASHA STEVENS|D05|31377|A298|D05|FINANCE|NATASHA STEVENS
+
+5. select e_id,name,salary from employee where salary=(select min(salary) from employee e inner join dept d on e.name=d.depmanager);
+A165|NATASHA STEVENS|31377
+
+6.sqlite> select count(*) from employee where dep_id in(select dept_id from dept where deptname='COMMUNICATIONS');
+6
+sqlite> select count(e_id) from employee e inner join dept d on e.dep_id=d.dept_id where deptname='COMMUNICATIONS';
+6
+
+7.sqlite> select name,max(salary) from employee where dep_id=(select dept_id from dept where deptname='FINANCE');
+ADAM WAYNE|94324
+
+
+8.sqlite> select name,min(salary) from employee where dep_id=(select dept_id from dept where deptname='PRODUCT');
+NICK MARTIN|50174
+
+
+9.sqlite> select count(e_id) from employee where salary=(select max(salary) from employee where dep_id=(select dept_id from dept where deptname='HEALTH'));
+1
+
+
+10.sqlite> select name from employee where manager_id=(select e_id from employee where name='NATASHA STEVENS');
+ADAM WAYNE
+JOSEPH ANGELIN
+
+11.sqlite> select name,count(e_id),deptname,depmanager from employee e inner join dept d on e.dep_id=d.dept_id where d.dept_id =(select dept_id from dept where deptname='HEALTH');
+JOHN HELLEN|6|HEALTH|TIM ARCHER
+sqlite> select name,e_id,deptname,depmanager from employee e inner join dept d on e.dep_id=d.dept_id where d.dept_id =(select dept_id from dept where deptname='HEALTH');
+MARTIN TREDEAU|A114|HEALTH|TIM ARCHER
+PAUL VINCENT|A132|HEALTH|TIM ARCHER
+TIM ARCHER|A120|HEALTH|TIM ARCHER
+BRAD MICHAEL|A143|HEALTH|TIM ARCHER
+EDWARD CANE|A176|HEALTH|TIM ARCHER
+JOHN HELLEN|A111|HEALTH|TIM ARCHER

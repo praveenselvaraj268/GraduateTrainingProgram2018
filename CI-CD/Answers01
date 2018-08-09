@@ -1,5 +1,6 @@
 --<09-AUG-2018>
 --<Submitted by praveen.b.selvaraj>
+
 1)What is an Environment?
 
 It is a set of hardware/software components that helps in setup to develop,test and deploy code.
@@ -29,10 +30,12 @@ UAT/PVS
 Continuos integration is a  development practice where members of a team integrate their work frequently
 
 6)What is CD
+
 An approach in which teams produce software in short cycles, ensuring that the software can be reliably released at any time.
 It aims at building, testing, and releasing software with greater speed and frequency.
 
 7)How CI/CD fits in Agile.
+
 CI/CD facilates agility because s/w change reaches the production more frequently ,providing more oppourtunities for customers to experience and feedback change.
 Agile deals with delivering a releasable software and CI/CD helps in acheiving that.
 
@@ -42,9 +45,11 @@ The term build is a process of converting source files to executable files which
 
 
 9)What is an artifact.
+
 Any file that is related to a product and holds business value is an artifact.
 
 10) Name some build tools
+
 Make
 Ant
 Maven
